@@ -1,6 +1,6 @@
 require "test_helper"
 
-class MunicipesControllerTest < ActionDispatch::IntegrationTest
+class AddressTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
