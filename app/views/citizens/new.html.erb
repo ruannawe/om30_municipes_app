@@ -1,0 +1,89 @@
+<!-- app/views/citizens/new.html.erb -->
+
+<section>
+    <% if flash.any? %>
+        <div class="flash-messages">
+            <% flash.each do |key, message| %>
+                <div class="<%= key %>">
+                    <%= message %>
+                </div>
+            <% end %>
+        </div>
+    <% end %>
+
+    <%= form_with url: citizens_path, method: :post, local: true do |form| %>
+
+        <!-- Campos para Citizen -->
+        <%= form.fields_for :citizen do |citizen_fields| %>
+            <div class="field">
+                <%= citizen_fields.label :full_name, "Nome Completo" %>
+                <%= citizen_fields.text_field :full_name, placeholder: "Nome Completo" %>
+            </div>
+
+            <div class="field">
+                <%= citizen_fields.label :tax_id, "CPF" %>
+                <%= citizen_fields.text_field :tax_id, placeholder: "CPF" %>
+            </div>
+
+            <div class="field">
+                <%= citizen_fields.label :national_health_card, "Cartão SUS" %>
+                <%= citizen_fields.text_field :national_health_card, placeholder: "Cartão SUS" %>
+            </div>
+
+            <div class="field">
+                <%= citizen_fields.label :email, "Email" %>
+                <%= citizen_fields.text_field :email, placeholder: "Email" %>
+            </div>
+
+            <div class="field">
+                <%= citizen_fields.label :birthdate, "Data de Nascimento" %>
+                <%= citizen_fields.date_field :birthdate, placeholder: "Data de Nascimento" %>
+            </div>
+
+            <div class="field">
+                <%= citizen_fields.label :phone, "Telefone" %>
+                <%= citizen_fields.text_field :phone, placeholder: "Telefone" %>
+            </div>
+
+            <div class="field">
+                <%= citizen_fields.label :status, "Status" %>
+                <%= citizen_fields.check_box :status %>
+            </div>
+        <% end %>
+
+        <!-- Campos para Address -->
+        <%= form.fields_for :address do |address_fields| %>
+            <div class="field">
+                <%= address_fields.label :zip_code, "CEP" %>
+                <%= address_fields.text_field :zip_code, placeholder: "CEP" %>
+            </div>
+
+            <div class="field">
+                <%= address_fields.label :street, "Logradouro" %>
+                <%= address_fields.text_field :street, placeholder: "Logradouro" %>
+            </div>
+
+            <div class="field">
+                <%= address_fields.label :neighborhood, "Bairro" %>
+                <%= address_fields.text_field :neighborhood, placeholder: "Bairro" %>
+            </div>
+
+            <div class="field">
+                <%= address_fields.label :city, "Cidade" %>
+                <%= address_fields.text_field :city, placeholder: "Cidade" %>
+            </div>
+
+            <div class="field">
+                <%= address_fields.label :state, "Estado" %>
+                <%= address_fields.text_field :state, placeholder: "Estado" %>
+            </div>
+
+            <div class="field">
+                <%= address_fields.label :ibge_code, "Código IBGE" %>
+                <%= address_fields.text_field :ibge_code, placeholder: "Código IBGE" %>
+            </div>
+        <% end %>
+
+        <%= form.submit "Criar" %>
+    <% end %>
+</section>
