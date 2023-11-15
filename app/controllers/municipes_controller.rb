@@ -1,2 +1,0 @@
-class MunicipesController < ApplicationController
-end
