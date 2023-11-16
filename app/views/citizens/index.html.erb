@@ -6,34 +6,53 @@
   <% end %>
 <% end %>
 
-<h1>Listagem de Munícipes</h1>
+<style>
+    .filter-flex-container {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .filter-flex-item {
+        margin-right: 20px;
+    }
+</style>
 
 <section>
-  <%= form_with url: citizens_path, method: :get, local: true do |form| %>
+    <h4>Filtros</h4>
 
-    <!-- Campos de Filtro para Citizen -->
-    <%= form.fields_for :citizen do |citizen_fields| %>
-      <%= citizen_fields.text_field :full_name, placeholder: "Nome Completo" %>
-      <%= citizen_fields.text_field :tax_id, placeholder: "CPF" %>
-      <%= citizen_fields.text_field :national_health_card, placeholder: "Cartão SUS" %>
-      <%= citizen_fields.text_field :email, placeholder: "Email" %>
-      <%= citizen_fields.date_field :birthdate, placeholder: "Data de Nascimento" %>
-      <%= citizen_fields.text_field :phone, placeholder: "Telefone" %>
+    <%= form_with url: citizens_path, method: :get, class: "form-container", local: true do |form| %>
+
+        <div class="filter-flex-container">
+            <!-- Campos de Filtro para Citizen -->
+            <div class="filter-flex-item">
+                <%= form.fields_for :citizen do |citizen_fields| %>
+                    <%= citizen_fields.text_field :full_name, placeholder: "Nome Completo" %>
+                    <%= citizen_fields.text_field :tax_id, placeholder: "CPF" %>
+                    <%= citizen_fields.text_field :national_health_card, placeholder: "Cartão SUS" %>
+                    <%= citizen_fields.text_field :email, placeholder: "Email" %>
+                    <%= citizen_fields.date_field :birthdate, placeholder: "Data de Nascimento" %>
+                    <%= citizen_fields.text_field :phone, placeholder: "Telefone" %>
+                <% end %>
+            </div>
+
+            <!-- Campos de Filtro para Endereco -->
+            <div class="filter-flex-item">
+                <%= form.fields_for :address do |address_fields| %>
+                    <%= address_fields.text_field :zip_code, placeholder: "CEP" %>
+                    <%= address_fields.text_field :street, placeholder: "Logradouro" %>
+                    <%= address_fields.text_field :neighborhood, placeholder: "Bairro" %>
+                    <%= address_fields.text_field :city, placeholder: "Cidade" %>
+                    <%= address_fields.text_field :state, placeholder: "Estado" %>
+                    <%= address_fields.text_field :ibge_code, placeholder: "Código IBGE" %>
+                <% end %>
+            </div>
+        </div>
+
+        <%= form.submit "Filtrar" %>
     <% end %>
-
-    <!-- Campos de Filtro para Endereco -->
-    <%= form.fields_for :address do |address_fields| %>
-      <%= address_fields.text_field :zip_code, placeholder: "CEP" %>
-      <%= address_fields.text_field :street, placeholder: "Logradouro" %>
-      <%= address_fields.text_field :neighborhood, placeholder: "Bairro" %>
-      <%= address_fields.text_field :city, placeholder: "Cidade" %>
-      <%= address_fields.text_field :state, placeholder: "Estado" %>
-      <%= address_fields.text_field :ibge_code, placeholder: "Código IBGE" %>
-    <% end %>
-
-    <%= form.submit "Filtrar" %>
-  <% end %>
 </section>
+
+<h1>Listagem de Munícipes</h1>
 
 <table>
   <thead>
@@ -43,6 +62,7 @@
       <th>Email</th>
       <th>Telefone</th>
       <th>Endereço</th>
+      <th>Ações</th> <!-- Added a column for actions -->
     </tr>
   </thead>
   <tbody>
@@ -54,6 +74,9 @@
         <td><%= citizen.phone %></td>
         <td>
           <%= citizen.address.street %>, <%= citizen.address.neighborhood %>, <%= citizen.address.city %>
+        </td>
+        <td>
+          <%= link_to 'Editar', edit_citizen_path(citizen), class: "button" %> <!-- Edit link -->
         </td>
       </tr>
     <% end %>

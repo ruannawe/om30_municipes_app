@@ -1,6 +1,8 @@
 class CitizensController < ApplicationController
   def index
-    @citizens = Citizen.filter(citizen_params)
+    cp = citizen_params
+    @citizens = Citizen.filter(cp)
+    address_params = cp[:address_attributes]
 
     if address_params.present?
       @citizens = @citizens.joins(:address).merge(Address.filter(address_params))
@@ -9,52 +11,62 @@ class CitizensController < ApplicationController
     end
   end
 
-  # @citizen.save
-  # @address.persisted?
+  def new
+    @citizen = Citizen.new
+    @citizen.build_address
+  end
+
+  def edit
+    @citizen = Citizen.find(params[:id])
+    @citizen.build_address unless @citizen.address
+  end
+
   def create
     @citizen = Citizen.new(citizen_params)
 
     if @citizen.save
-      @address = @citizen.create_address(address_params)
-      if @address.persisted?
-        redirect_to citizens_path, notice: 'Citizen was successfully created with address.'
-      else
-        flash.now[:alert] = "Failed to create address: " + @address.errors.full_messages.to_sentence
-        render :new
-      end
+      redirect_to citizens_path, notice: 'Citizen was successfully created.'
     else
-      flash.now[:alert] = "Failed to create citizen: " + @citizen.errors.full_messages.to_sentence
+      flash.now[:alert] = "Failed to create citizen."
       render :new
+    end
+  end
+
+  def update
+    @citizen = Citizen.find(params[:id])
+
+    if @citizen.update(citizen_params)
+      redirect_to citizens_path, notice: 'Citizen was successfully updated.'
+    else
+      flash.now[:alert] = "Failed to update citizen."
+      render :edit
     end
   end
 
   private
 
   def citizen_params
-    params_key_as_symbol('citizen')
-    byebug
-    return ActionController::Parameters.new if params[:citizen].empty?
+    return ActionController::Parameters.new if !params[:citizen].present?
 
     params
-          &.require(:citizen)
-          .permit(:full_name, :tax_id, :national_health_card, :email, :birthdate, :phone, :status)
-          .reject { |_key, value| value.blank? }
-  end
-
-  def address_params
-    params_key_as_symbol('address')
-    return ActionController::Parameters.new if params[:address].empty?
-
-    params
-          &.require(:address)
-          .permit(:zip_code, :street, :neighborhood, :city, :state, :ibge_code)
-          .reject { |_key, value| value.blank? }
-  end
-
-  def params_key_as_symbol(key)
-    if params["[#{key}]"].present?
-      params[:"#{key}"] = params["[#{key}]"]
-      params.delete("[#{key}]")
-    end
+          .require(:citizen)
+          .permit(
+            :full_name,
+            :tax_id,
+            :national_health_card,
+            :email,
+            :birthdate,
+            :phone,
+            :status,
+            address_attributes: [
+              :id,
+              :zip_code,
+              :street,
+              :neighborhood,
+              :city,
+              :state,
+              :ibge_code
+            ]
+          )
   end
 end
