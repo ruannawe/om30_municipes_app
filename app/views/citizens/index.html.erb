@@ -20,31 +20,27 @@
 <section>
     <h4>Filtros</h4>
 
-    <%= form_with url: citizens_path, method: :get, class: "form-container", local: true do |form| %>
+    <%= form_with url: citizens_path, method: :get, local: true do |form| %>
 
         <div class="filter-flex-container">
             <!-- Campos de Filtro para Citizen -->
             <div class="filter-flex-item">
-                <%= form.fields_for :citizen do |citizen_fields| %>
-                    <%= citizen_fields.text_field :full_name, placeholder: "Nome Completo" %>
-                    <%= citizen_fields.text_field :tax_id, placeholder: "CPF" %>
-                    <%= citizen_fields.text_field :national_health_card, placeholder: "Cartão SUS" %>
-                    <%= citizen_fields.text_field :email, placeholder: "Email" %>
-                    <%= citizen_fields.date_field :birthdate, placeholder: "Data de Nascimento" %>
-                    <%= citizen_fields.text_field :phone, placeholder: "Telefone" %>
-                <% end %>
+                <%= form.text_field :full_name, placeholder: "Nome Completo" %>
+                <%= form.text_field :tax_id, placeholder: "CPF" %>
+                <%= form.text_field :national_health_card, placeholder: "Cartão SUS" %>
+                <%= form.text_field :email, placeholder: "Email" %>
+                <%= form.date_field :birthdate, placeholder: "Data de Nascimento" %>
+                <%= form.text_field :phone, placeholder: "Telefone" %>
             </div>
 
             <!-- Campos de Filtro para Endereco -->
             <div class="filter-flex-item">
-                <%= form.fields_for :address do |address_fields| %>
-                    <%= address_fields.text_field :zip_code, placeholder: "CEP" %>
-                    <%= address_fields.text_field :street, placeholder: "Logradouro" %>
-                    <%= address_fields.text_field :neighborhood, placeholder: "Bairro" %>
-                    <%= address_fields.text_field :city, placeholder: "Cidade" %>
-                    <%= address_fields.text_field :state, placeholder: "Estado" %>
-                    <%= address_fields.text_field :ibge_code, placeholder: "Código IBGE" %>
-                <% end %>
+                <%= form.text_field :zip_code, placeholder: "CEP" %>
+                <%= form.text_field :street, placeholder: "Logradouro" %>
+                <%= form.text_field :neighborhood, placeholder: "Bairro" %>
+                <%= form.text_field :city, placeholder: "Cidade" %>
+                <%= form.text_field :state, placeholder: "Estado" %>
+                <%= form.text_field :ibge_code, placeholder: "Código IBGE" %>
             </div>
         </div>
 

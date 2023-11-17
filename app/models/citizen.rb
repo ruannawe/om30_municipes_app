@@ -7,10 +7,10 @@ class Citizen < ApplicationRecord
 
   scope :filter_by_full_name, -> (full_name) { where("full_name ILIKE ?", "%#{full_name}%") }
   scope :filter_by_tax_id, -> (tax_id) { where("tax_id ILIKE ?", "%#{tax_id}%") }
-  scope :filter_by_tax_id, -> (national_health_card) { where("national_health_card ILIKE ?", "%#{national_health_card}%") }
-  scope :filter_by_tax_id, -> (email) { where("email ILIKE ?", "%#{email}%") }
+  scope :filter_by_national_health_card, -> (national_health_card) { where("national_health_card ILIKE ?", "%#{national_health_card}%") }
+  scope :filter_by_email, -> (email) { where("email ILIKE ?", "%#{email}%") }
   scope :filter_by_birthdate, -> (birthdate) { where(birthdate: birthdate) }
-  scope :filter_by_tax_id, -> (phone) { where("phone ILIKE ?", "%#{phone}%") }
+  scope :filter_by_phone, -> (phone) { where("phone ILIKE ?", "%#{phone}%") }
 
   def self.filter(filtering_params)
     results = where(nil)
