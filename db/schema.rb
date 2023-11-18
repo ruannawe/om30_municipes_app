@@ -42,7 +42,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_192412) do
     t.date "birthdate", null: false
     t.string "phone", null: false
     t.string "photo"
-    t.boolean "status"
+    t.boolean "status", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["birthdate"], name: "index_citizens_on_birthdate"

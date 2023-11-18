@@ -3,7 +3,8 @@ class Citizen < ApplicationRecord
 
   accepts_nested_attributes_for :address
 
-  validates :full_name, :tax_id, :national_health_card, :email, :birthdate, :phone, :status, presence: true
+  validates :full_name, :tax_id, :national_health_card, :email, :birthdate, :phone, presence: true
+  validates :status, inclusion: { in: [true, false] }
 
   scope :filter_by_full_name, -> (full_name) { where("full_name ILIKE ?", "%#{full_name}%") }
   scope :filter_by_tax_id, -> (tax_id) { where("tax_id ILIKE ?", "%#{tax_id}%") }

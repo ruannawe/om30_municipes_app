@@ -8,7 +8,7 @@ class CreateCitizens < ActiveRecord::Migration[7.1]
       t.date :birthdate, null: false
       t.string :phone, null: false
       t.string :photo
-      t.boolean :status
+      t.boolean :status, default: false
 
       t.timestamps
     end
