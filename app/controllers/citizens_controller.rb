@@ -21,10 +21,11 @@ class CitizensController < ApplicationController
     @citizen = Citizen.new(citizen_params)
 
     if @citizen.save
+      CitizenMailer.welcome_email(@citizen).deliver_now
       redirect_to citizens_path, notice: 'Citizen was successfully created.'
     else
       flash.now[:alert] = 'Failed to create citizen.'
-      render :new
+      redirect_to :index
     end
   end
 
@@ -77,9 +78,5 @@ class CitizensController < ApplicationController
       :state,
       :ibge_code
     ]
-  end
-
-  def reject_blanks
-    reject { |_, value| value.blank? }
   end
 end

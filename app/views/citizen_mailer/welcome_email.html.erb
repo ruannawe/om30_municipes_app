@@ -1,0 +1,18 @@
+<p>Olá <%= @citizen.full_name %>! Seu cadastro foi realizado com sucesso.</p>
+
+Prezado(a) <%= @citizen.full_name %>,
+
+Seja bem-vindo(a) ao Sistema de Munícipes do <%= @citizen.address.city %>!
+
+Este e-mail confirma que suas informações foram cadastradas com sucesso em nosso sistema. Aqui estão os detalhes do seu cadastro:
+- Nome Completo: <%= @citizen.full_name %>
+- CPF: <%= @citizen.full_name %>
+- CNS: <%= @citizen.national_health_card %>birthdate
+- Data de Nascimento: <%= @citizen.birthdate %>
+- Telefone: <%= @citizen.phone %>
+- E-mail: <%= @citizen.email %>
+
+Por favor, verifique se estas informações estão corretas e nos informe imediatamente caso haja alguma inconsistência.
+
+Atenciosamente,
+Administração Municipal <%= @citizen.address.city %>.

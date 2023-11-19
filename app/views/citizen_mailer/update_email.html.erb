@@ -1,0 +1,14 @@
+Prezado(a) <%= @citizen.full_name %>,
+
+Informamos que suas informações no Sistema de Municípes do <%= @citizen.address.city %> foram atualizadas recentemente. Confira abaixo os dados atualizados:
+- Nome Completo: <%= @citizen.full_name %>
+- CPF: <%= @citizen.full_name %>
+- CNS: <%= @citizen.national_health_card %>birthdate
+- Data de Nascimento: <%= @citizen.birthdate %>
+- Telefone: <%= @citizen.phone %>
+- E-mail: <%= @citizen.email %>
+
+Se você não solicitou esta atualização, por favor entre em contato conosco imediatamente.
+
+Atenciosamente,
+Administração Municipal <%= @citizen.address.city %>.
