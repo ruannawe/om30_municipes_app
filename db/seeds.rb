@@ -8,11 +8,19 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+def generate_cns(definitive: true)
+  loop do
+    prefix = definitive ? rand(1..2).to_s : rand(7..9).to_s
+    cns_number = prefix + '%014d' % rand(10**14)
+    return cns_number if valid_cns_number?(cns_number)
+  end
+end
+
 100.times do |i|
   citizen = Citizen.create(
     full_name: Faker::Name.name,
     tax_id: Faker::IDNumber.brazilian_citizen_number,
-    national_health_card: Faker::Number.number(digits: 15),
+    national_health_card: generate_cns([true, false].sample),
     email: Faker::Internet.email,
     birthdate: Faker::Date.between(from: '1950-01-01', to: '2000-12-31'),
     phone: Faker::PhoneNumber.phone_number,

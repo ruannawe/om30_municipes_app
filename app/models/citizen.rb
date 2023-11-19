@@ -60,14 +60,13 @@ class Citizen < ApplicationRecord
   end
 
   def valid_cns_number?(number)
-    sum = 0
-    weight = number.length
+    return false unless number.match?(/\A[1-9]\d{14}\z/)
 
-    number.each_char do |digit|
-      sum += digit.to_i * weight
-      weight -= 1
+    sum = 0
+    number.each_char.with_index do |char, index|
+      sum += char.to_i * (15 - index)
     end
 
-    (sum % 11) == 0
+    sum % 11 == 0
   end
 end
