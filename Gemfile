@@ -72,4 +72,5 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem 'dotenv-rails', '~> 2.8', '>= 2.8.1'
 end
