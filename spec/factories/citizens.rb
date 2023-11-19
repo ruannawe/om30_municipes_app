@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :citizen do
     full_name { "John Doe" }
-    tax_id { "123456789" }
+    tax_id { CPF.generate(true) }
     national_health_card { "987654321" }
     email { "john@example.com" }
     birthdate { "1980-01-01" }

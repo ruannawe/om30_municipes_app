@@ -6,7 +6,8 @@ class Citizen < ApplicationRecord
   validates :full_name, :tax_id, :national_health_card, :email, :birthdate, :phone, presence: true
   validates :status, inclusion: { in: [true, false] }
 
-  validate :validate_birthdate
+  validate :validate_birthdate, if: -> { birthdate.present? }
+  validate :cpf_valid, if: -> { tax_id.present? }
 
   scope :filter_by_full_name, -> (full_name) { where("full_name ILIKE ?", "%#{full_name}%") }
   scope :filter_by_tax_id, -> (tax_id) { where("tax_id ILIKE ?", "%#{tax_id}%") }
@@ -28,18 +29,19 @@ class Citizen < ApplicationRecord
   private
 
   def validate_birthdate
-    if birthdate.nil?
-      errors.add(:birthdate, 'Birthdate must be a valid date')
-      return
-    end
-
     if birthdate > Date.today
-      errors.add(:birthdate, "Birthdate can't be in the future")
+      errors.add(:birthdate, "can't be in the future")
       return
     end
 
     if birthdate < 150.years.ago
-      errors.add(:birthdate, "Birthdate can't be more than 150 years ago")
+      errors.add(:birthdate, "can't be more than 150 years ago")
+    end
+  end
+
+  def cpf_valid
+    unless CPF.valid?(tax_id, strict: true)
+      errors.add(:tax_id, 'is not a valid CPF')
     end
   end
 end
