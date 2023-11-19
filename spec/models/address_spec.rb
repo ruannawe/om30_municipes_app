@@ -78,4 +78,43 @@ RSpec.describe Address, type: :model do
       expect(Address.filter_by_ibge_code('11111')).to_not include(@address2)
     end
   end
+
+  describe 'birthdate validations' do
+    let(:valid_attributes) do
+      {
+        full_name: 'John Doe',
+        tax_id: '123456789',
+        national_health_card: '987654321',
+        email: 'john@example.com',
+        phone: '1234567890'
+      }
+    end
+
+    context 'when birthdate is valid' do
+      it 'is valid with a recent birthdate' do
+        citizen = Citizen.new(valid_attributes.merge(birthdate: Date.today - 30.years))
+        expect(citizen).to be_valid
+      end
+    end
+
+    context 'when birthdate is invalid' do
+      it 'is invalid with a future birthdate' do
+        citizen = Citizen.new(valid_attributes.merge(birthdate: Date.tomorrow))
+        citizen.valid?
+        expect(citizen.errors[:birthdate]).to include("Birthdate can't be in the future")
+      end
+
+      it 'is invalid with a birthdate more than 150 years ago' do
+        citizen = Citizen.new(valid_attributes.merge(birthdate: 151.years.ago))
+        citizen.valid?
+        expect(citizen.errors[:birthdate]).to include("Birthdate can't be more than 150 years ago")
+      end
+
+      it 'is invalid with a non-date birthdate' do
+        citizen = Citizen.new(valid_attributes.merge(birthdate: 'not-a-date'))
+        citizen.valid?
+        expect(citizen.errors[:birthdate]).to include('Birthdate must be a valid date')
+      end
+    end
+  end
 end
