@@ -28,27 +28,39 @@ RSpec.describe CitizensController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid attributes' do
-      it 'creates a new citizen' do
+      it 'creates a new citizen with address' do
+        address_attributes = attributes_for(:address)
+        citizen_params = attributes_for(:citizen).merge(address_attributes: address_attributes)
+
         expect {
-          post :create, params: { citizen: attributes_for(:citizen) }
+          post :create, params: { citizen: citizen_params }
         }.to change(Citizen, :count).by(1)
       end
 
       it 'redirects to the index' do
-        post :create, params: { citizen: attributes_for(:citizen) }
+        address_attributes = attributes_for(:address)
+        citizen_params = attributes_for(:citizen).merge(address_attributes: address_attributes)
+
+        post :create, params: { citizen: citizen_params }
         expect(response).to redirect_to(citizens_path)
       end
     end
 
     context 'with invalid attributes' do
       it 'does not save the new citizen' do
+        address_attributes = attributes_for(:address)
+        citizen_params = attributes_for(:citizen, full_name: nil).merge(address_attributes: address_attributes)
+
         expect {
-          post :create, params: { citizen: attributes_for(:citizen, full_name: nil) }
+          post :create, params: { citizen: citizen_params }
         }.to_not change(Citizen, :count)
       end
 
       it 're-renders the new method' do
-        post :create, params: { citizen: attributes_for(:citizen, full_name: nil) }
+        address_attributes = attributes_for(:address)
+        citizen_params = attributes_for(:citizen, full_name: nil).merge(address_attributes: address_attributes)
+
+        post :create, params: { citizen: citizen_params }
         expect(response).to render_template(:new)
       end
     end

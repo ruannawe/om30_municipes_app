@@ -1,5 +1,5 @@
 class CitizenMailer < ApplicationMailer
-  default from: 'no-reply@yourdomain.com'
+  default from: ENV['SENDGRID_DOMAIN']
 
   def welcome_email(citizen)
     @citizen = citizen

@@ -25,7 +25,7 @@ class CitizensController < ApplicationController
       redirect_to citizens_path, notice: 'Citizen was successfully created.'
     else
       flash.now[:alert] = 'Failed to create citizen.'
-      redirect_to :index
+      render :new
     end
   end
 
