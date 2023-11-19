@@ -47,7 +47,7 @@ gem "bootsnap", require: false
 gem "byebug"
 gem 'faker', '~> 3.2', '>= 3.2.2'
 gem 'cpf_cnpj'
-gem 'mailgun-ruby', '~>1.1'
+gem 'sendgrid-ruby'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
