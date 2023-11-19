@@ -31,6 +31,7 @@ class CitizensController < ApplicationController
 
   def update
     if @citizen.update(citizen_params)
+      CitizenMailer.update_email(@citizen).deliver_now
       redirect_to citizens_path, notice: 'Citizen was successfully updated.'
     else
       flash.now[:alert] = 'Failed to update citizen.'
