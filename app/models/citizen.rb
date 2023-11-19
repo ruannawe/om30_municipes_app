@@ -30,8 +30,6 @@ class Citizen < ApplicationRecord
     results
   end
 
-  private
-
   def validate_birthdate
     if birthdate > Date.today
       errors.add(:birthdate, "can't be in the future")
