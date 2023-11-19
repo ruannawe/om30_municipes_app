@@ -8,6 +8,7 @@ class Citizen < ApplicationRecord
 
   validate :validate_birthdate, if: -> { birthdate.present? }
   validate :cpf_valid, if: -> { tax_id.present? }
+  validate :validate_national_health_card, if: -> { national_health_card.present? }
 
   scope :filter_by_full_name, -> (full_name) { where("full_name ILIKE ?", "%#{full_name}%") }
   scope :filter_by_tax_id, -> (tax_id) { where("tax_id ILIKE ?", "%#{tax_id}%") }
@@ -43,5 +44,27 @@ class Citizen < ApplicationRecord
     unless CPF.valid?(tax_id, strict: true)
       errors.add(:tax_id, 'is not a valid CPF')
     end
+  end
+
+  def validate_national_health_card
+    unless valid_cns_format?(national_health_card) && valid_cns_number?(national_health_card)
+      errors.add(:national_health_card, 'is not a valid CNS number')
+    end
+  end
+
+  def valid_cns_format?(number)
+    number.match?(/^\d{15}$/)
+  end
+
+  def valid_cns_number?(number)
+    sum = 0
+    weight = number.length
+
+    number.each_char do |digit|
+      sum += digit.to_i * weight
+      weight -= 1
+    end
+
+    (sum % 11) == 0
   end
 end

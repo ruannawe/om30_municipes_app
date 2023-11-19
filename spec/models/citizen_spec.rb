@@ -6,7 +6,7 @@ RSpec.describe Citizen, type: :model do
       @citizen = Citizen.new(
         full_name: 'John Doe',
         tax_id: '93343339016',
-        national_health_card: '987654321',
+        national_health_card: '239233319950009',
         email: 'johndoe@example.com',
         birthdate: Date.new(1980, 1, 1),
         phone: '1234567890',
@@ -70,7 +70,7 @@ RSpec.describe Citizen, type: :model do
       @citizen1 = Citizen.create!(
         full_name: 'Alice Smith',
         tax_id: '51017822115',
-        national_health_card: '222222222',
+        national_health_card: '239233319950009',
         email: 'alice@example.com',
         birthdate: Date.new(1990, 1, 1),
         phone: '1234567890',
@@ -79,7 +79,7 @@ RSpec.describe Citizen, type: :model do
       @citizen2 = Citizen.create!(
         full_name: 'Bob Jones',
         tax_id: '39655368262',
-        national_health_card: '444444444',
+        national_health_card: '954440753770000',
         email: 'bob@example.com',
         birthdate: Date.new(1995, 1, 1),
         phone: '0987654321',
@@ -98,8 +98,8 @@ RSpec.describe Citizen, type: :model do
     end
 
     it 'filters by national_health_card' do
-      expect(Citizen.filter_by_national_health_card('222222222')).to include(@citizen1)
-      expect(Citizen.filter_by_national_health_card('222222222')).to_not include(@citizen2)
+      expect(Citizen.filter_by_national_health_card('239233319950009')).to include(@citizen1)
+      expect(Citizen.filter_by_national_health_card('239233319950009')).to_not include(@citizen2)
     end
 
     it 'filters by email' do
@@ -123,7 +123,7 @@ RSpec.describe Citizen, type: :model do
       {
         full_name: 'John Doe',
         tax_id: '43484923369',
-        national_health_card: '987654321',
+        national_health_card: '239233319950009',
         email: 'john@example.com',
         phone: '1234567890'
       }
@@ -175,6 +175,28 @@ RSpec.describe Citizen, type: :model do
       citizen = Citizen.new(tax_id: nil)
       citizen.valid?
       expect(citizen.errors[:tax_id]).to include("can't be blank")
+    end
+  end
+
+  describe 'CNS validations' do
+    it 'is valid with a valid CNS number' do
+      citizen = create(:citizen, national_health_card: '239233319950009')
+
+      expect(citizen).to be_valid
+    end
+
+    it 'is invalid with an invalid CNS number' do
+      citizen = build(:citizen, national_health_card: '239233310000000')
+
+      citizen.valid?
+      expect(citizen.errors[:national_health_card]).to include('is not a valid CNS number')
+    end
+
+    it 'is invalid with a CNS number of incorrect length' do
+      citizen = build(:citizen, national_health_card: 'short')
+
+      citizen.valid?
+      expect(citizen.errors[:national_health_card]).to include('is not a valid CNS number')
     end
   end
 end

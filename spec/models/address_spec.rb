@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Address, type: :model do
-  let(:citizen) { Citizen.create!(full_name: 'John Doe', tax_id: CPF.generate(true), national_health_card: '987654321', email: 'johndoe@example.com', birthdate: Date.today, phone: '1234567890', status: true) }
+  let(:citizen) { Citizen.create!(full_name: 'John Doe', tax_id: CPF.generate(true), national_health_card: '239233319950009', email: 'johndoe@example.com', birthdate: Date.today, phone: '1234567890', status: true) }
 
   describe 'validations' do
     it 'is valid with valid attributes' do
