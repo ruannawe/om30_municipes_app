@@ -90,7 +90,7 @@ RSpec.describe Citizen, type: :model do
     end
   end
 
-  describe 'birthdate validations' do
+  describe 'Birthdate validations' do
     let(:valid_attributes) { attributes_for(:citizen).except(:birthdate) }
 
     it 'is valid with a recent birthdate' do
@@ -154,6 +154,28 @@ RSpec.describe Citizen, type: :model do
       citizen = build(:citizen, national_health_card: 'short')
       citizen.valid?
       expect(citizen.errors[:national_health_card]).to include('is not a valid CNS number')
+    end
+  end
+
+  describe 'Email validations' do
+    it 'is valid with a valid email' do
+      citizen = build(:citizen, email: 'test@example.com')
+      expect(citizen).to be_valid
+    end
+
+    it 'is invalid with an invalid email' do
+      invalid_emails = ['test@example', 'test', 'test@.com', 'test@example..com']
+      invalid_emails.each do |invalid_email|
+        citizen = build(:citizen, email: invalid_email)
+        expect(citizen).not_to be_valid
+        expect(citizen.errors[:email]).to include('is invalid')
+      end
+    end
+
+    it 'is invalid without an email' do
+      citizen = build(:citizen, email: nil)
+      expect(citizen).not_to be_valid
+      expect(citizen.errors[:email]).to include("can't be blank")
     end
   end
 end

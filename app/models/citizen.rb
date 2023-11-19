@@ -3,8 +3,11 @@ class Citizen < ApplicationRecord
 
   accepts_nested_attributes_for :address
 
-  validates :full_name, :tax_id, :national_health_card, :email, :birthdate, :phone, presence: true
+  validates :full_name, :tax_id, :national_health_card, :birthdate, :phone, presence: true
   validates :status, inclusion: { in: [true, false] }
+
+  EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  validates :email, presence: true, format: { with: EMAIL_REGEX }
 
   validate :validate_birthdate, if: -> { birthdate.present? }
   validate :cpf_valid, if: -> { tax_id.present? }
