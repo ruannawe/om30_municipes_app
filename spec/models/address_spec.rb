@@ -1,4 +1,3 @@
-# spec/models/address_spec.rb
 require 'rails_helper'
 
 RSpec.describe Address, type: :model do
