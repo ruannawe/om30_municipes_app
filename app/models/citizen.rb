@@ -13,8 +13,10 @@ class Citizen < ApplicationRecord
   validate :cpf_valid, if: -> { tax_id.present? }
   validate :validate_national_health_card, if: -> { national_health_card.present? }
   validates :phone, format: {
-    with: /\A\+\d{1,3}\s?\d{2,3}\s?\d{7,10}\z/, message: 'must include country and area codes'
+    with: /\A\+\d{1,3}\s?\(\d{2,3}\)\s?\d{4,5}-?\d{4}\z/,
+    message: 'must include country and area codes in the correct format'
   }
+
 
   scope :filter_by_full_name, -> (full_name) { where("full_name ILIKE ?", "%#{full_name}%") }
   scope :filter_by_tax_id, -> (tax_id) { where("tax_id ILIKE ?", "%#{tax_id}%") }

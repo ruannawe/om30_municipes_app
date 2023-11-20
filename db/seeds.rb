@@ -8,6 +8,8 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+Faker::Config.locale = 'pt-BR'
+
 def valid_cns_number?(number)
   return false unless number.match?(/\A[1-9]\d{14}\z/)
 
@@ -27,19 +29,27 @@ def generate_cns(definitive: true)
   end
 end
 
+def generate_phone_number
+  brazilian_country_code = '+55'
+  brazilian_phone_number = Faker::PhoneNumber.phone_number
+
+  "#{brazilian_country_code} #{brazilian_phone_number}"
+end
+
 100.times do |i|
-  citizen = Citizen.create(
+  byebug
+  citizen = Citizen.create!(
     full_name: Faker::Name.name,
     tax_id: Faker::IDNumber.brazilian_citizen_number,
     national_health_card: generate_cns(definitive: [true, false].sample),
     email: Faker::Internet.email,
     birthdate: Faker::Date.between(from: '1950-01-01', to: '2000-12-31'),
-    phone: Faker::PhoneNumber.phone_number,
+    phone: generate_phone_number,
     photo: Faker::Avatar.image(size: "100x100", format: 'jpg'),
     status: [true, false].sample
   )
 
-  address = Address.create(
+  address = Address.create!(
     citizen_id: citizen.id,
     zip_code: Faker::Address.postcode,
     street: Faker::Address.street_address,
