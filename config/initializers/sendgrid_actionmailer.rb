@@ -2,36 +2,40 @@ require 'sendgrid-ruby'
 include SendGrid
 
 class SendGridActionMailer
-  def initialize
-    # Set up the settings directly within the initializer
+  def initialize(*args)
+    values = args.extract_options!
     @settings = {
-      api_key: ENV['SENDGRID_API_KEY'], # Ensure this environment variable is set
+      api_key: ENV['SENDGRID_API_KEY'],
       raise_delivery_errors: true
-    }
+    }.merge!(values)
   end
 
   attr_accessor :settings
 
   def deliver!(mail)
-    # Set up the email components
-    from = Email.new(email: mail.from.first)
+    # Construct the 'from', 'subject', 'to', and 'content' for SendGrid
+    from_email = Email.new(email: mail.from_addrs.first)
+    to_email = Email.new(email: mail.to_addrs.first)
     subject = mail.subject
-    to = Email.new(email: mail.to.first)
-    content = Content.new(type: 'text/plain', value: mail.body.raw_source)
+    content = Content.new(type: 'text/html', value: mail.body.encoded)
 
-    # Construct the email using SendGrid's classes
-    mail = Mail.new(from, subject, to, content)
+    # Create the SendGrid mail object
+    sg_mail = SendGrid::Mail.new
+    sg_mail.from = from_email
+    sg_mail.subject = subject
 
-    # Initialize SendGrid API client
-    sg = SendGrid::API.new(api_key: @settings[:api_key])
+    personalization = Personalization.new
+    personalization.add_to(to_email)
+    sg_mail.add_personalization(personalization)
+    sg_mail.add_content(content)
 
     # Send the email
-    response = sg.client.mail._('send').post(request_body: mail.to_json)
+    sg = SendGrid::API.new(api_key: settings[:api_key])
+    response = sg.client.mail._('send').post(request_body: sg_mail.to_json)
 
-    # Optionally raise an error if the response is not a success
+    # Handle the response
     raise response.body unless response.status_code.to_s =~ /^2\d\d$/
   end
 end
 
-# Add the custom delivery method to ActionMailer
 ActionMailer::Base.add_delivery_method :sendgrid_actionmailer, SendGridActionMailer
