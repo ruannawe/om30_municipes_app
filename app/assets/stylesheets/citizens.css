@@ -1,8 +1,22 @@
 .filter-flex-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 .filter-flex-item {
-    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-basis: calc(50% - 10px);
+}
+
+.filter-button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.button {
+    width: calc(100% - 10px);
 }

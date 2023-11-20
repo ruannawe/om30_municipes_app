@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     const filterForm = document.getElementById('filter-form')
-
     if (filterForm) {
         filterForm.addEventListener('submit', handleFormSubmit)
     }
@@ -29,3 +28,13 @@ const buildQueryString = formData => {
 const redirectToFilteredUrl = (action, queryString) => {
     window.location = action + '?' + queryString
 }
+
+const clearQueryParamsAndReload = () => {
+    const currentUrl = window.location.href;
+    const baseUrl = currentUrl.includes('?') ? currentUrl.split('?')[0] : currentUrl;
+
+    window.history.pushState({}, '', baseUrl);
+    window.location.reload();
+}
+
+window.clearQueryParamsAndReload = clearQueryParamsAndReload;

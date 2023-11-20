@@ -33,7 +33,10 @@
             </div>
         </div>
 
-        <%= form.submit "Filtrar" %>
+        <div class="filter-button-group">
+            <%= form.submit "Filtrar", class: "button primary" %>
+            <button type="button" class="button secondary" onclick="clearQueryParamsAndReload()" id="reset-button">Limpar filtros</button>
+        </div>
     <% end %>
 </section>
 
@@ -61,7 +64,7 @@
           <%= citizen.address.street %>, <%= citizen.address.neighborhood %>, <%= citizen.address.city %>
         </td>
         <td>
-          <%= link_to 'Editar', edit_citizen_path(citizen), class: "button" %> <!-- Edit link -->
+          <%= link_to 'Editar', edit_citizen_path(citizen), class: "button" %>
         </td>
       </tr>
     <% end %>
