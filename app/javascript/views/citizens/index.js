@@ -3,6 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filterForm) {
         filterForm.addEventListener('submit', handleFormSubmit)
     }
+
+    const resetButton = document.getElementById('reset-button')
+    if (resetButton) {
+        resetButton.addEventListener('click', clearQueryParamsAndReload)
+    }
 })
 
 const handleFormSubmit = event => {
@@ -34,7 +39,6 @@ const clearQueryParamsAndReload = () => {
     const baseUrl = currentUrl.includes('?') ? currentUrl.split('?')[0] : currentUrl;
 
     window.history.pushState({}, '', baseUrl);
+
     window.location.reload();
 }
-
-window.clearQueryParamsAndReload = clearQueryParamsAndReload;
