@@ -48,6 +48,7 @@ gem "byebug"
 gem 'faker', '~> 3.2', '>= 3.2.2'
 gem 'cpf_cnpj'
 gem 'sendgrid-ruby'
+gem 'twilio-ruby'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
