@@ -4,4 +4,9 @@ class CitizenMailerPreview < ActionMailer::Preview
     citizen =  Citizen.first
     CitizenMailer.with(citizen: citizen).welcome_email(citizen)
   end
+
+  def update_email
+    citizen =  Citizen.first
+    CitizenMailer.with(citizen: citizen).update_email(citizen)
+  end
 end
