@@ -13,11 +13,11 @@
   </head>
 
   <body>
-    <div id="flash_messages">
-      <%= render "shared/flash_messages", flash: flash %>
-    </div>
-
     <main class="container">
+      <div id="flash_messages">
+        <%= render "shared/flash_messages", flash: flash %>
+      </div>
+
       <%= yield %>
     </main>
   </body>

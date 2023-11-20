@@ -26,7 +26,7 @@ class CitizensController < ApplicationController
 
       redirect_to citizens_path, notice: 'Citizen was successfully created.'
     else
-      byebug
+      flash.now[:alert] = @citizen.errors.full_messages
       respond_to do |format|
         format.turbo_stream
         format.html { render :new }
@@ -41,8 +41,11 @@ class CitizensController < ApplicationController
 
       redirect_to citizens_path, notice: 'Citizen was successfully updated.'
     else
-      flash.now[:alert] = 'Failed to update citizen.'
-      render :edit
+      flash.now[:alert] = @citizen.errors.full_messages
+      respond_to do |format|
+        format.turbo_stream
+        format.html { render :new }
+      end
     end
   end
 

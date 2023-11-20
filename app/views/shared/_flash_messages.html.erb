@@ -1,5 +1,18 @@
-<% flash.each do |type, message| %>
-  <div class="flash <%= type %>">
-    <%= message %>
+<% flash.each do |type, messages| %>
+  <div class="flash <%= type %>" style="margin-bottom: 1rem; padding: 0.5rem;">
+    <% if type == 'notice' %>
+      <span class="icon">🔔</span>
+    <% elsif type == 'alert' %>
+      <span class="icon">⚠️</span>
+    <% end %>
+    <% if messages.respond_to?(:each) %>
+      <ul>
+        <% messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <%= messages %>
+    <% end %>
   </div>
 <% end %>

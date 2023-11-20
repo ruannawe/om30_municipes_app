@@ -5,14 +5,18 @@ class TwilioService
   }
 
   def self.send_sms(to:, template_key:)
-    body = TEMPLATES[template_key]
-    raise "Template inválido" unless body
+    begin
+      body = TEMPLATES[template_key]
+      raise "Template inválido" unless body
 
-    client = Twilio::REST::Client.new
-    client.messages.create(
-      from: '+16066033043',
-      to: to,
-      body: body
-    )
+      client = Twilio::REST::Client.new
+      client.messages.create(
+        from: '+16066033043',
+        to: to,
+        body: body
+      )
+    rescue
+      # Ignoring any exceptions
+    end
   end
 end
