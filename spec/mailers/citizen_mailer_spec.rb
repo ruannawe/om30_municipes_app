@@ -8,7 +8,7 @@ RSpec.describe CitizenMailer, type: :mailer do
     it 'renders the headers' do
       expect(mail.subject).to eq('Bem-vindo ao Sistema de Municípes - Confirmação de Cadastro')
       expect(mail.to).to eq(['test@example.com'])
-      expect(mail.from).to eq(ENV['SENDGRID_DOMAIN'])
+      expect(mail.from).to eq([ENV['SENDGRID_DOMAIN']])
     end
 
     it 'renders the body' do
@@ -27,7 +27,7 @@ RSpec.describe CitizenMailer, type: :mailer do
     it 'renders the headers' do
       expect(mail.subject).to eq('Atualização de Informações do Munícipe')
       expect(mail.to).to eq(['test@example.com'])
-      expect(mail.from).to eq(ENV['SENDGRID_DOMAIN'])
+      expect(mail.from).to eq([ENV['SENDGRID_DOMAIN']])
     end
 
     it 'renders the body' do
