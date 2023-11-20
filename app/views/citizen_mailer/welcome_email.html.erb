@@ -1,18 +1,43 @@
-<p>Olá <%= @citizen.full_name %>! Seu cadastro foi realizado com sucesso.</p>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Confirmação de Cadastro</title>
+  <style type="text/css">
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+    .content {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background: #f8f8f8;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <p>Olá <%= @citizen.full_name %>! Seu cadastro foi realizado com sucesso.</p>
 
-Prezado(a) <%= @citizen.full_name %>,
+    <p>Prezado(a) <%= @citizen.full_name %>,</p>
 
-Seja bem-vindo(a) ao Sistema de Munícipes do <%= @citizen.address.city %>!
+    <p>Seja bem-vindo(a) ao Sistema de Munícipes do <%= @citizen.address.city %>!</p>
 
-Este e-mail confirma que suas informações foram cadastradas com sucesso em nosso sistema. Aqui estão os detalhes do seu cadastro:
-- Nome Completo: <%= @citizen.full_name %>
-- CPF: <%= @citizen.full_name %>
-- CNS: <%= @citizen.national_health_card %>birthdate
-- Data de Nascimento: <%= @citizen.birthdate %>
-- Telefone: <%= @citizen.phone %>
-- E-mail: <%= @citizen.email %>
+    <p>Este e-mail confirma que suas informações foram cadastradas com sucesso em nosso sistema. Aqui estão os detalhes do seu cadastro:</p>
+    <ul>
+      <li>Nome Completo: <%= @citizen.full_name %></li>
+      <li>CPF: <%= @citizen.tax_id %></li>
+      <li>CNS: <%= @citizen.national_health_card %></li>
+      <li>Data de Nascimento: <%= @citizen.birthdate.strftime('%d/%m/%Y') %></li>
+      <li>Telefone: <%= @citizen.phone %></li>
+      <li>E-mail: <%= @citizen.email %></li>
+    </ul>
 
-Por favor, verifique se estas informações estão corretas e nos informe imediatamente caso haja alguma inconsistência.
+    <p>Por favor, verifique se estas informações estão corretas e nos informe imediatamente caso haja alguma inconsistência.</p>
 
-Atenciosamente,
-Administração Municipal <%= @citizen.address.city %>.
+    <p>Atenciosamente,<br>Administração Municipal <%= @citizen.address.city %>.</p>
+  </div>
+</body>
+</html>

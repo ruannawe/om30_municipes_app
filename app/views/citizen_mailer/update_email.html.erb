@@ -1,14 +1,39 @@
-Prezado(a) <%= @citizen.full_name %>,
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Atualização de Informações</title>
+  <style type="text/css">
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+    .content {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background: #f8f8f8;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <p>Prezado(a) <%= @citizen.full_name %>,</p>
 
-Informamos que suas informações no Sistema de Municípes do <%= @citizen.address.city %> foram atualizadas recentemente. Confira abaixo os dados atualizados:
-- Nome Completo: <%= @citizen.full_name %>
-- CPF: <%= @citizen.full_name %>
-- CNS: <%= @citizen.national_health_card %>birthdate
-- Data de Nascimento: <%= @citizen.birthdate %>
-- Telefone: <%= @citizen.phone %>
-- E-mail: <%= @citizen.email %>
+    <p>Informamos que suas informações no Sistema de Munícipes do <%= @citizen.address.city %> foram atualizadas recentemente. Confira abaixo os dados atualizados:</p>
+    <ul>
+      <li>Nome Completo: <%= @citizen.full_name %></li>
+      <li>CPF: <%= @citizen.tax_id %></li>
+      <li>CNS: <%= @citizen.national_health_card %></li>
+      <li>Data de Nascimento: <%= @citizen.birthdate.strftime('%d/%m/%Y') %></li>
+      <li>Telefone: <%= @citizen.phone %></li>
+      <li>E-mail: <%= @citizen.email %></li>
+    </ul>
 
-Se você não solicitou esta atualização, por favor entre em contato conosco imediatamente.
+    <p>Se você não solicitou esta atualização, por favor entre em contato conosco imediatamente.</p>
 
-Atenciosamente,
-Administração Municipal <%= @citizen.address.city %>.
+    <p>Atenciosamente,<br>Administração Municipal <%= @citizen.address.city %>.</p>
+  </div>
+</body>
+</html>
