@@ -6,7 +6,7 @@ class Citizen < ApplicationRecord
   has_one :address
   has_one_attached :photo
 
-  before_validation :format_phone_number
+  before_validation :phone_length_check
 
   accepts_nested_attributes_for :address
 
@@ -20,7 +20,7 @@ class Citizen < ApplicationRecord
   validate :cpf_valid, if: -> { tax_id.present? }
   validate :validate_national_health_card, if: -> { national_health_card.present? }
   validates :phone, format: {
-    with: /\A\+\d+\z/,
+    with: /\A\+?\d{1,3}?[\s-]?\(?\d{2,3}\)?[\s-]?\d{4,5}[\s-]?\d{4}\z/,
     message: 'must include country and area codes in the correct format'
   }
 
@@ -72,9 +72,12 @@ class Citizen < ApplicationRecord
     number.match?(/^\d{15}$/)
   end
 
-  def format_phone_number
-    self.phone = phone.gsub(/(?!^\+)\D/, '')
-    self.phone = '+55' + phone unless phone.start_with?('+')
-  end
+  def phone_length_check
+    phone_stripped = phone.gsub(/[^0-9+]/, '')
+    phone_stripped = "+55#{phone_stripped}" unless phone_stripped.start_with?('+')
 
+    unless phone_stripped.length.between?(10, 16)
+      errors.add(:phone, 'number is incorrect. It should have between 10 and 16 digits')
+    end
+  end
 end
