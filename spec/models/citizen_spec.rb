@@ -40,6 +40,7 @@ RSpec.describe Citizen, type: :model do
 
     it 'is invalid without a phone' do
       citizen.phone = nil
+
       expect(citizen).to_not be_valid
       expect(citizen.errors[:phone]).to include('must include country and area codes in the correct format')
     end

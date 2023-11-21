@@ -6,7 +6,7 @@ class Citizen < ApplicationRecord
   has_one :address
   has_one_attached :photo
 
-  before_validation :phone_length_check
+  before_validation :phone_length_check, if: -> { phone.present? }
 
   accepts_nested_attributes_for :address
 
