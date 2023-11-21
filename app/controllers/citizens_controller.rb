@@ -8,6 +8,8 @@ class CitizensController < ApplicationController
                 else
                   @citizens.includes(:address)
                 end
+
+    @pagy, @citizens = pagy(@citizens)
   end
 
   def new

@@ -49,6 +49,7 @@ gem 'cpf_cnpj'
 gem 'faker', '~> 3.2', '>= 3.2.2'
 gem 'sendgrid-ruby'
 gem 'twilio-ruby'
+gem 'pagy'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
