@@ -1,9 +1,9 @@
+require 'open-uri'
 require 'cns_generator'
+include CnsGenerator
 
 FactoryBot.define do
   factory :citizen do
-    include CnsGenerator
-
     full_name { 'John Doe' }
     tax_id { CPF.generate(true) }
     national_health_card { generate_cns(definitive: [true, false].sample) }
@@ -16,12 +16,17 @@ FactoryBot.define do
       citizen.address ||= build(:address, citizen:)
     end
 
-    after(:create) do |citizen|
-      citizen.photo.attach(
-        io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'test_image.jpeg')),
-        filename: 'test_image.jpeg',
-        content_type: 'image/jpeg'
-      )
+    trait :with_s3_image do
+      after(:create) do |citizen|
+        s3_image_url = "https://citizen-pictures.s3.amazonaws.com/nbevuzxpffvylvx35biulps4gr2c"
+        image = URI.open(s3_image_url)
+
+        citizen.photo.attach(
+          io: image,
+          filename: File.basename(URI.parse(s3_image_url).path),
+          content_type: 'image/jpeg'
+        )
+      end
     end
   end
 end

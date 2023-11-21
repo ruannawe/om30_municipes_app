@@ -11,13 +11,6 @@
 require 'cns_generator'
 include CnsGenerator
 
-def generate_phone_number
-  brazilian_country_code = '+55'
-  brazilian_phone_number = Faker::PhoneNumber.phone_number
-
-  "#{brazilian_country_code} #{brazilian_phone_number}"
-end
-
 100.times do |_i|
   citizen = Citizen.create!(
     full_name: Faker::Name.name,
@@ -25,8 +18,7 @@ end
     national_health_card: generate_cns(definitive: [true, false].sample),
     email: Faker::Internet.email,
     birthdate: Faker::Date.between(from: '1950-01-01', to: '2000-12-31'),
-    phone: generate_phone_number,
-    # photo: Faker::Avatar.image(size: '100x100', format: 'jpg'),
+    phone: '+55 ' + Faker::PhoneNumber.phone_number,
     status: [true, false].sample
   )
 

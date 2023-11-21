@@ -191,4 +191,11 @@ RSpec.describe Citizen, type: :model do
       expect(citizen.errors[:email]).to include("can't be blank")
     end
   end
+
+  describe 'with S3 image' do
+    it 'attaches an S3 image' do
+      citizen = create(:citizen, :with_s3_image)
+      expect(citizen.photo).to be_attached
+    end
+  end
 end
