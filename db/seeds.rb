@@ -37,7 +37,6 @@ def generate_phone_number
 end
 
 100.times do |_i|
-  byebug
   citizen = Citizen.create!(
     full_name: Faker::Name.name,
     tax_id: Faker::IDNumber.brazilian_citizen_number,
