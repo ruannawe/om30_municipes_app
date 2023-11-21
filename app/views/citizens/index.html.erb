@@ -26,13 +26,18 @@
         </div>
 
         <div class="filter-button-group">
-            <%= form.submit "Filtrar", class: "button primary" %>
-            <button type="button" class="button secondary" id="reset-button">Limpar filtros</button>
+            <%= form.submit "Filtrar", class: "filter-button primary" %>
+            <button type="button" class="filter-button secondary" id="reset-button">Limpar filtros</button>
         </div>
     <% end %>
 </section>
 
-<h1>Listagem de Munícipes</h1>
+<div class="citizens-header">
+    <h1>Listagem de Munícipes</h1>
+    <button class="button primary create-citizen-button" onclick="window.location='<%= new_citizen_path %>'">
+        Criar Munícipe
+    </button>
+</div>
 
 <table>
   <thead>
