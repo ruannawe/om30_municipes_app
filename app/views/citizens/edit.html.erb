@@ -1,3 +1,16 @@
 <h1>Editar Munícipe</h1>
 
+<section>
+  <h3>Fotos</h3>
+
+  <% if @citizen.photo.attached? %>
+    <div class="photo-sizes">
+      <%= image_tag @citizen.photo.variant(resize_to_limit: [300, 300]) %>
+      <%= image_tag @citizen.photo.variant(resize_to_limit: [150, 150]) %>
+      <%= image_tag @citizen.photo.variant(resize_to_limit: [50, 50]) %>
+    </div>
+  <% end %>
+
+</section>
+
 <%= render 'form', citizen: @citizen %>

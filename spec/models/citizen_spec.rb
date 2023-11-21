@@ -57,29 +57,11 @@ RSpec.describe Citizen, type: :model do
 
   describe 'scopes' do
     let(:citizen1) do
-      create(
-        :citizen,
-        full_name: 'Alice Smith',
-        tax_id: '51017822115',
-        national_health_card: '239233319950009',
-        email: 'alice@example.com',
-        birthdate: Date.new(1990, 1, 1),
-        phone: '+55 (48) 3035-5913',
-        status: true
-      )
+      create(:citizen, full_name: 'Alice Smith')
     end
 
     let(:citizen2) do
-      create(
-        :citizen,
-        full_name: 'Bob Jones',
-        tax_id: '39655368262',
-        national_health_card: '954440753770000',
-        email: 'bob@example.com',
-        birthdate: Date.new(1995, 1, 1),
-        phone: '+55 (82) 96888-0268',
-        status: false
-      )
+      create(:citizen, full_name: 'Bob Jones')
     end
 
     it 'filters by full_name' do
@@ -88,28 +70,36 @@ RSpec.describe Citizen, type: :model do
     end
 
     it 'filters by tax_id' do
-      expect(Citizen.filter_by_tax_id('51017822115')).to include(citizen1)
-      expect(Citizen.filter_by_tax_id('51017822115')).to_not include(citizen2)
+      tax_id = citizen1.tax_id
+      expect(Citizen.filter_by_tax_id(tax_id)).to include(citizen1)
+      expect(Citizen.filter_by_tax_id(tax_id)).to_not include(citizen2)
     end
 
     it 'filters by national_health_card' do
-      expect(Citizen.filter_by_national_health_card('239233319950009')).to include(citizen1)
-      expect(Citizen.filter_by_national_health_card('239233319950009')).to_not include(citizen2)
+      national_health_card = citizen1.national_health_card
+
+      expect(Citizen.filter_by_national_health_card(national_health_card)).to include(citizen1)
+      expect(Citizen.filter_by_national_health_card(national_health_card)).to_not include(citizen2)
     end
 
     it 'filters by email' do
-      expect(Citizen.filter_by_email('alice@example.com')).to include(citizen1)
-      expect(Citizen.filter_by_email('alice@example.com')).to_not include(citizen2)
+      email = citizen1.email
+      expect(Citizen.filter_by_email(email)).to include(citizen1)
+      expect(Citizen.filter_by_email(email)).to_not include(citizen2)
     end
 
     it 'filters by birthdate' do
-      expect(Citizen.filter_by_birthdate(Date.new(1990, 1, 1))).to include(citizen1)
-      expect(Citizen.filter_by_birthdate(Date.new(1990, 1, 1))).to_not include(citizen2)
+      birthdate = citizen1.birthdate
+
+      expect(Citizen.filter_by_birthdate(birthdate)).to include(citizen1)
+      expect(Citizen.filter_by_birthdate(birthdate)).to_not include(citizen2)
     end
 
     it 'filters by phone' do
-      expect(Citizen.filter_by_phone('+55 (48) 3035-5913')).to include(citizen1)
-      expect(Citizen.filter_by_phone('+55 (48) 3035-5913')).to_not include(citizen2)
+      phone = citizen1.phone
+
+      expect(Citizen.filter_by_phone(phone)).to include(citizen1)
+      expect(Citizen.filter_by_phone(phone)).to_not include(citizen2)
     end
   end
 

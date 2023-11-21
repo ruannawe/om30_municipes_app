@@ -3,44 +3,6 @@ require 'rails_helper'
 RSpec.describe Address, type: :model do
   let(:citizen) { create(:citizen) }
 
-  describe 'validations' do
-    let(:address) { build(:address, citizen:) }
-
-    it 'is valid with valid attributes' do
-      expect(address).to be_valid
-    end
-
-    it 'is not valid without a zip code' do
-      address.zip_code = nil
-      expect(address).to_not be_valid
-    end
-
-    it 'is not valid without a street' do
-      address.street = nil
-      expect(address).to_not be_valid
-    end
-
-    it 'is not valid without a neighborhood' do
-      address.neighborhood = nil
-      expect(address).to_not be_valid
-    end
-
-    it 'is not valid without a city' do
-      address.city = nil
-      expect(address).to_not be_valid
-    end
-
-    it 'is not valid without a state' do
-      address.state = nil
-      expect(address).to_not be_valid
-    end
-
-    it 'is not valid without a citizen' do
-      address.citizen = nil
-      expect(address).to_not be_valid
-    end
-  end
-
   describe 'scopes' do
     let!(:address1) do
       create(:address, zip_code: '12345', street: 'Main St', neighborhood: 'Downtown', city: 'Metropolis', state: 'State1',

@@ -32,6 +32,11 @@
     </div>
 
     <div class="field">
+      <%= form.label :photo, "Photo" %>
+      <%= form.file_field :photo, placeholder: "Photo" %>
+    </div>
+
+    <div class="field">
       <%= form.label :status, "Status" %>
       <%= form.check_box :status %>
     </div>

@@ -77,6 +77,7 @@ class CitizensController < ApplicationController
       email
       birthdate
       phone
+      photo
       status
     ]
   end

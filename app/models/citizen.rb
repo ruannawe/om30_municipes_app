@@ -1,5 +1,10 @@
+require 'cns_generator'
+
 class Citizen < ApplicationRecord
+  include CnsGenerator
+
   has_one :address
+  has_one_attached :photo
 
   accepts_nested_attributes_for :address
 
@@ -13,7 +18,7 @@ class Citizen < ApplicationRecord
   validate :cpf_valid, if: -> { tax_id.present? }
   validate :validate_national_health_card, if: -> { national_health_card.present? }
   validates :phone, format: {
-    with: /\A\+\d{1,3}\s?\(\d{2,3}\)\s?\d{4,5}-?\d{4}\z/,
+    with: /\A\+?\d{1,3}?[\s-]?\(?\d{2,3}\)?[\s-]?\d{4,5}[\s-]?\d{4}\z/,
     message: 'must include country and area codes in the correct format'
   }
 
@@ -35,6 +40,8 @@ class Citizen < ApplicationRecord
 
     results
   end
+
+  private
 
   def validate_birthdate
     if birthdate > Date.today
@@ -61,16 +68,5 @@ class Citizen < ApplicationRecord
 
   def valid_cns_format?(number)
     number.match?(/^\d{15}$/)
-  end
-
-  def valid_cns_number?(number)
-    return false unless number.match?(/\A[1-9]\d{14}\z/)
-
-    sum = 0
-    number.each_char.with_index do |char, index|
-      sum += char.to_i * (15 - index)
-    end
-
-    sum % 11 == 0
   end
 end

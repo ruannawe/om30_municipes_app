@@ -8,26 +8,8 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-Faker::Config.locale = 'pt-BR'
-
-def valid_cns_number?(number)
-  return false unless number.match?(/\A[1-9]\d{14}\z/)
-
-  sum = 0
-  number.each_char.with_index do |char, index|
-    sum += char.to_i * (15 - index)
-  end
-
-  sum % 11 == 0
-end
-
-def generate_cns(definitive: true)
-  loop do
-    prefix = definitive ? rand(1..2).to_s : rand(7..9).to_s
-    cns_number = prefix + ('%014d' % rand(10**14))
-    return cns_number if valid_cns_number?(cns_number)
-  end
-end
+require 'cns_generator'
+include CnsGenerator
 
 def generate_phone_number
   brazilian_country_code = '+55'
@@ -44,7 +26,7 @@ end
     email: Faker::Internet.email,
     birthdate: Faker::Date.between(from: '1950-01-01', to: '2000-12-31'),
     phone: generate_phone_number,
-    photo: Faker::Avatar.image(size: '100x100', format: 'jpg'),
+    # photo: Faker::Avatar.image(size: '100x100', format: 'jpg'),
     status: [true, false].sample
   )
 
