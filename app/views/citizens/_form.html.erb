@@ -48,12 +48,12 @@
     <%= form.fields_for :address do |address_fields| %>
       <div class="field">
         <%= address_fields.label :zip_code, "CEP" %>
-        <%= address_fields.text_field :zip_code, placeholder: "CEP", required: true %>
+        <%= address_fields.text_field :zip_code, placeholder: "CEP", id: 'address_zip_code', required: true %>
       </div>
 
       <div class="field">
         <%= address_fields.label :street, "Logradouro" %>
-        <%= address_fields.text_field :street, placeholder: "Logradouro", required: true %>
+        <%= address_fields.text_field :street, placeholder: "Logradouro", id: 'address_street', required: true %>
       </div>
 
       <div class="field">
@@ -63,22 +63,22 @@
 
       <div class="field">
         <%= address_fields.label :neighborhood, "Bairro" %>
-        <%= address_fields.text_field :neighborhood, placeholder: "Bairro", required: true %>
+        <%= address_fields.text_field :neighborhood, placeholder: "Bairro", id: 'address_neighborhood', required: true %>
       </div>
 
       <div class="field">
         <%= address_fields.label :city, "Cidade" %>
-        <%= address_fields.text_field :city, placeholder: "Cidade", required: true %>
+        <%= address_fields.text_field :city, placeholder: "Cidade", id: 'address_city', required: true %>
       </div>
 
       <div class="field">
         <%= address_fields.label :state, "Estado" %>
-        <%= address_fields.text_field :state, placeholder: "Estado", required: true %>
+        <%= address_fields.text_field :state, placeholder: "Estado", id: 'address_state', required: true %>
       </div>
 
       <div class="field">
         <%= address_fields.label :ibge_code, "Código IBGE" %>
-        <%= address_fields.text_field :ibge_code, placeholder: "Código IBGE" %>
+        <%= address_fields.text_field :ibge_code, placeholder: "Código IBGE", id: 'address_ibge_code' %>
       </div>
     <% end %>
 
