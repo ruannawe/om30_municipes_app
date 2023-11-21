@@ -24,7 +24,7 @@ end
 def generate_cns(definitive: true)
   loop do
     prefix = definitive ? rand(1..2).to_s : rand(7..9).to_s
-    cns_number = prefix + '%014d' % rand(10**14)
+    cns_number = prefix + ('%014d' % rand(10**14))
     return cns_number if valid_cns_number?(cns_number)
   end
 end

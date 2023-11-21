@@ -5,7 +5,7 @@ class SendGridActionMailer
   def initialize(*args)
     values = args.extract_options!
     @settings = {
-      api_key: ENV['SENDGRID_API_KEY'],
+      api_key: ENV.fetch('SENDGRID_API_KEY', nil),
       raise_delivery_errors: true
     }.merge!(values)
   end

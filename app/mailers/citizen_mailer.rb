@@ -1,5 +1,5 @@
 class CitizenMailer < ApplicationMailer
-  default from: ENV['SENDGRID_FROM']
+  default from: ENV.fetch('SENDGRID_FROM', nil)
 
   def welcome_email(citizen)
     @citizen = citizen
