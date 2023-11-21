@@ -14,8 +14,8 @@ RSpec.describe CitizenMailer, type: :mailer do
     it 'renders the body' do
       expect(mail.body.encoded).to match(citizen.full_name)
       expect(mail.body.encoded).to match(citizen.national_health_card)
-      expect(mail.body.encoded).to match(citizen.birthdate.to_s)
-      expect(mail.body.encoded).to match(citizen.phone)
+      expect(mail.body.encoded).to match(citizen.birthdate.strftime('%d/%m/%Y'))
+      expect(mail.body.encoded).to match(Regexp.escape(citizen.phone))
       expect(mail.body.encoded).to match(citizen.email)
     end
   end
@@ -33,8 +33,8 @@ RSpec.describe CitizenMailer, type: :mailer do
     it 'renders the body' do
       expect(mail.body.encoded).to match(citizen.full_name)
       expect(mail.body.encoded).to match(citizen.national_health_card)
-      expect(mail.body.encoded).to match(citizen.birthdate.to_s)
-      expect(mail.body.encoded).to match(citizen.phone)
+      expect(mail.body.encoded).to match(citizen.birthdate.strftime('%d/%m/%Y'))
+      expect(mail.body.encoded).to match(Regexp.escape(citizen.phone))
       expect(mail.body.encoded).to match(citizen.email)
     end
   end

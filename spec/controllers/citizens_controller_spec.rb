@@ -96,7 +96,7 @@ RSpec.describe CitizensController, type: :controller do
       end
 
       it 're-renders the edit method' do
-        put :update, params: { id: @citizen, citizen: attributes_for(:citizen, full_name: nil) }
+        put :update, params: { id: @citizen, citizen: attributes_for(:citizen, full_name: nil) }, format: :html
         expect(response).to render_template(:edit)
       end
     end

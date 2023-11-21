@@ -44,7 +44,7 @@ class CitizensController < ApplicationController
       flash.now[:alert] = @citizen.errors.full_messages
       respond_to do |format|
         format.turbo_stream
-        format.html { render :new }
+        format.html { render :edit }
       end
     end
   end

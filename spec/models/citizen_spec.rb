@@ -41,7 +41,7 @@ RSpec.describe Citizen, type: :model do
     it 'is invalid without a phone' do
       citizen.phone = nil
       expect(citizen).to_not be_valid
-      expect(citizen.errors[:phone]).to include("can't be blank")
+      expect(citizen.errors[:phone]).to include("must include country and area codes in the correct format")
     end
 
     it 'is valid with a false status' do
@@ -56,8 +56,31 @@ RSpec.describe Citizen, type: :model do
   end
 
   describe 'scopes' do
-    let(:citizen1) { create(:citizen, full_name: 'Alice Smith', tax_id: '51017822115', national_health_card: '239233319950009', email: 'alice@example.com', birthdate: Date.new(1990, 1, 1), phone: '1234567890', status: true) }
-    let(:citizen2) { create(:citizen, full_name: 'Bob Jones', tax_id: '39655368262', national_health_card: '954440753770000', email: 'bob@example.com', birthdate: Date.new(1995, 1, 1), phone: '0987654321', status: false) }
+    let(:citizen1) {
+      create(
+        :citizen,
+        full_name: 'Alice Smith',
+        tax_id: '51017822115',
+        national_health_card: '239233319950009',
+        email: 'alice@example.com',
+        birthdate: Date.new(1990, 1, 1),
+        phone: '+55 (48) 3035-5913',
+        status: true
+      )
+    }
+
+    let(:citizen2) {
+      create(
+        :citizen,
+        full_name: 'Bob Jones',
+        tax_id: '39655368262',
+        national_health_card: '954440753770000',
+        email: 'bob@example.com',
+        birthdate: Date.new(1995, 1, 1),
+        phone: '+55 (82) 96888-0268',
+        status: false
+      )
+    }
 
     it 'filters by full_name' do
       expect(Citizen.filter_by_full_name('Alice')).to include(citizen1)
@@ -85,8 +108,8 @@ RSpec.describe Citizen, type: :model do
     end
 
     it 'filters by phone' do
-      expect(Citizen.filter_by_phone('1234567890')).to include(citizen1)
-      expect(Citizen.filter_by_phone('1234567890')).to_not include(citizen2)
+      expect(Citizen.filter_by_phone('+55 (48) 3035-5913')).to include(citizen1)
+      expect(Citizen.filter_by_phone('+55 (48) 3035-5913')).to_not include(citizen2)
     end
   end
 
