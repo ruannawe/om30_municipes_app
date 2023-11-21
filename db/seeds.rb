@@ -36,7 +36,7 @@ def generate_phone_number
   "#{brazilian_country_code} #{brazilian_phone_number}"
 end
 
-100.times do |i|
+100.times do |_i|
   byebug
   citizen = Citizen.create!(
     full_name: Faker::Name.name,
@@ -45,7 +45,7 @@ end
     email: Faker::Internet.email,
     birthdate: Faker::Date.between(from: '1950-01-01', to: '2000-12-31'),
     phone: generate_phone_number,
-    photo: Faker::Avatar.image(size: "100x100", format: 'jpg'),
+    photo: Faker::Avatar.image(size: '100x100', format: 'jpg'),
     status: [true, false].sample
   )
 

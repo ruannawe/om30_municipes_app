@@ -4,7 +4,7 @@ RSpec.describe Address, type: :model do
   let(:citizen) { create(:citizen) }
 
   describe 'validations' do
-    let(:address) { build(:address, citizen: citizen) }
+    let(:address) { build(:address, citizen:) }
 
     it 'is valid with valid attributes' do
       expect(address).to be_valid
@@ -42,8 +42,14 @@ RSpec.describe Address, type: :model do
   end
 
   describe 'scopes' do
-    let!(:address1) { create(:address, zip_code: '12345', street: 'Main St', neighborhood: 'Downtown', city: 'Metropolis', state: 'State1', citizen: citizen) }
-    let!(:address2) { create(:address, zip_code: '67890', street: 'Second St', neighborhood: 'Uptown', city: 'Gotham', state: 'State2', citizen: citizen) }
+    let!(:address1) do
+      create(:address, zip_code: '12345', street: 'Main St', neighborhood: 'Downtown', city: 'Metropolis', state: 'State1',
+                       citizen:)
+    end
+    let!(:address2) do
+      create(:address, zip_code: '67890', street: 'Second St', neighborhood: 'Uptown', city: 'Gotham', state: 'State2',
+                       citizen:)
+    end
 
     it 'filters by zip_code' do
       expect(Address.filter_by_zip_code('12345')).to include(address1)

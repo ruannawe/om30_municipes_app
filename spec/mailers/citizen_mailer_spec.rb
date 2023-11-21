@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe CitizenMailer, type: :mailer do
   describe 'welcome_email' do

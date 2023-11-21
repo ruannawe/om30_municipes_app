@@ -10,7 +10,7 @@ FactoryBot.define do
     status { false }
 
     after(:build) do |citizen|
-      citizen.address ||= build(:address, citizen: citizen)
+      citizen.address ||= build(:address, citizen:)
     end
   end
 end

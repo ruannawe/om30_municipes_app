@@ -4,7 +4,6 @@
     <%= form_with url: citizens_path, method: :get, local: true, id: 'filter-form' do |form| %>
 
         <div class="filter-flex-container">
-            <!-- Campos de Filtro para Citizen -->
             <div class="filter-flex-item">
                 <%= form.text_field :full_name, placeholder: "Nome Completo", value: params[:full_name] %>
                 <%= form.text_field :tax_id, placeholder: "CPF", value: params[:tax_id] %>
@@ -14,7 +13,6 @@
                 <%= form.text_field :phone, placeholder: "Telefone", value: params[:phone] %>
             </div>
 
-            <!-- Campos de Filtro para Endereco -->
             <div class="filter-flex-item">
                 <%= form.text_field :zip_code, placeholder: "CEP", value: params[:zip_code] %>
                 <%= form.text_field :street, placeholder: "Logradouro", value: params[:street] %>

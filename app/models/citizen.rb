@@ -6,7 +6,7 @@ class Citizen < ApplicationRecord
   validates :full_name, :tax_id, :national_health_card, :birthdate, presence: true
   validates :status, inclusion: { in: [true, false] }
 
-  EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d-]+(\.[a-z\d-]+)*\.[a-z]+\z/i
   validates :email, presence: true, format: { with: EMAIL_REGEX }
 
   validate :validate_birthdate, if: -> { birthdate.present? }
@@ -17,13 +17,14 @@ class Citizen < ApplicationRecord
     message: 'must include country and area codes in the correct format'
   }
 
-
-  scope :filter_by_full_name, -> (full_name) { where("full_name ILIKE ?", "%#{full_name}%") }
-  scope :filter_by_tax_id, -> (tax_id) { where("tax_id ILIKE ?", "%#{tax_id}%") }
-  scope :filter_by_national_health_card, -> (national_health_card) { where("national_health_card ILIKE ?", "%#{national_health_card}%") }
-  scope :filter_by_email, -> (email) { where("email ILIKE ?", "%#{email}%") }
-  scope :filter_by_birthdate, -> (birthdate) { where(birthdate: birthdate) }
-  scope :filter_by_phone, -> (phone) { where("phone ILIKE ?", "%#{phone}%") }
+  scope :filter_by_full_name, ->(full_name) { where('full_name ILIKE ?', "%#{full_name}%") }
+  scope :filter_by_tax_id, ->(tax_id) { where('tax_id ILIKE ?', "%#{tax_id}%") }
+  scope :filter_by_national_health_card, lambda { |national_health_card|
+                                           where('national_health_card ILIKE ?', "%#{national_health_card}%")
+                                         }
+  scope :filter_by_email, ->(email) { where('email ILIKE ?', "%#{email}%") }
+  scope :filter_by_birthdate, ->(birthdate) { where(birthdate:) }
+  scope :filter_by_phone, ->(phone) { where('phone ILIKE ?', "%#{phone}%") }
 
   def self.filter(filtering_params)
     results = where(nil)
@@ -41,21 +42,21 @@ class Citizen < ApplicationRecord
       return
     end
 
-    if birthdate < 150.years.ago
-      errors.add(:birthdate, "can't be more than 150 years ago")
-    end
+    return unless birthdate < 150.years.ago
+
+    errors.add(:birthdate, "can't be more than 150 years ago")
   end
 
   def cpf_valid
-    unless CPF.valid?(tax_id, strict: true)
-      errors.add(:tax_id, 'is not a valid CPF')
-    end
+    return if CPF.valid?(tax_id, strict: true)
+
+    errors.add(:tax_id, 'is not a valid CPF')
   end
 
   def validate_national_health_card
-    unless valid_cns_format?(national_health_card) && valid_cns_number?(national_health_card)
-      errors.add(:national_health_card, 'is not a valid CNS number')
-    end
+    return if valid_cns_format?(national_health_card) && valid_cns_number?(national_health_card)
+
+    errors.add(:national_health_card, 'is not a valid CNS number')
   end
 
   def valid_cns_format?(number)

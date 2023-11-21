@@ -41,7 +41,7 @@ RSpec.describe Citizen, type: :model do
     it 'is invalid without a phone' do
       citizen.phone = nil
       expect(citizen).to_not be_valid
-      expect(citizen.errors[:phone]).to include("must include country and area codes in the correct format")
+      expect(citizen.errors[:phone]).to include('must include country and area codes in the correct format')
     end
 
     it 'is valid with a false status' do
@@ -56,7 +56,7 @@ RSpec.describe Citizen, type: :model do
   end
 
   describe 'scopes' do
-    let(:citizen1) {
+    let(:citizen1) do
       create(
         :citizen,
         full_name: 'Alice Smith',
@@ -67,9 +67,9 @@ RSpec.describe Citizen, type: :model do
         phone: '+55 (48) 3035-5913',
         status: true
       )
-    }
+    end
 
-    let(:citizen2) {
+    let(:citizen2) do
       create(
         :citizen,
         full_name: 'Bob Jones',
@@ -80,7 +80,7 @@ RSpec.describe Citizen, type: :model do
         phone: '+55 (82) 96888-0268',
         status: false
       )
-    }
+    end
 
     it 'filters by full_name' do
       expect(Citizen.filter_by_full_name('Alice')).to include(citizen1)

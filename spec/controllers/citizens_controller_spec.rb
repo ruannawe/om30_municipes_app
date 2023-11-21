@@ -30,16 +30,16 @@ RSpec.describe CitizensController, type: :controller do
     context 'with valid attributes' do
       it 'creates a new citizen with address' do
         address_attributes = attributes_for(:address)
-        citizen_params = attributes_for(:citizen).merge(address_attributes: address_attributes)
+        citizen_params = attributes_for(:citizen).merge(address_attributes:)
 
-        expect {
+        expect do
           post :create, params: { citizen: citizen_params }
-        }.to change(Citizen, :count).by(1)
+        end.to change(Citizen, :count).by(1)
       end
 
       it 'redirects to the index' do
         address_attributes = attributes_for(:address)
-        citizen_params = attributes_for(:citizen).merge(address_attributes: address_attributes)
+        citizen_params = attributes_for(:citizen).merge(address_attributes:)
 
         post :create, params: { citizen: citizen_params }
         expect(response).to redirect_to(citizens_path)
@@ -49,16 +49,16 @@ RSpec.describe CitizensController, type: :controller do
     context 'with invalid attributes' do
       it 'does not save the new citizen' do
         address_attributes = attributes_for(:address)
-        citizen_params = attributes_for(:citizen, full_name: nil).merge(address_attributes: address_attributes)
+        citizen_params = attributes_for(:citizen, full_name: nil).merge(address_attributes:)
 
-        expect {
+        expect do
           post :create, params: { citizen: citizen_params }
-        }.to_not change(Citizen, :count)
+        end.to_not change(Citizen, :count)
       end
 
       it 're-renders the new method' do
         address_attributes = attributes_for(:address)
-        citizen_params = attributes_for(:citizen, full_name: nil).merge(address_attributes: address_attributes)
+        citizen_params = attributes_for(:citizen, full_name: nil).merge(address_attributes:)
 
         post :create, params: { citizen: citizen_params }
         expect(response).to render_template(:new)

@@ -1,5 +1,5 @@
 class CitizensController < ApplicationController
-  before_action :set_citizen, only: [:edit, :update]
+  before_action :set_citizen, only: %i[edit update]
 
   def index
     @citizens = Citizen.filter(search_params[:citizen])
@@ -57,7 +57,7 @@ class CitizensController < ApplicationController
   end
 
   def citizen_params
-    params.fetch(:citizen, {}).permit(citizen_attributes, address_attributes: address_attributes)
+    params.fetch(:citizen, {}).permit(citizen_attributes, address_attributes:)
   end
 
   def search_params
@@ -68,26 +68,26 @@ class CitizensController < ApplicationController
   end
 
   def citizen_attributes
-    [
-      :full_name,
-      :tax_id,
-      :national_health_card,
-      :email,
-      :birthdate,
-      :phone,
-      :status
+    %i[
+      full_name
+      tax_id
+      national_health_card
+      email
+      birthdate
+      phone
+      status
     ]
   end
 
   def address_attributes
-    [
-      :id,
-      :zip_code,
-      :street,
-      :neighborhood,
-      :city,
-      :state,
-      :ibge_code
+    %i[
+      id
+      zip_code
+      street
+      neighborhood
+      city
+      state
+      ibge_code
     ]
   end
 end
