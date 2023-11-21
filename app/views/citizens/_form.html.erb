@@ -3,37 +3,41 @@
 
     <div class="field">
       <%= form.label :full_name, "Nome Completo" %>
-      <%= form.text_field :full_name, placeholder: "Nome Completo" %>
+      <%= form.text_field :full_name, placeholder: "Nome Completo", required: true %>
     </div>
 
     <div class="field">
       <%= form.label :tax_id, "CPF" %>
-      <%= form.text_field :tax_id, placeholder: "CPF" %>
+      <%= form.text_field :tax_id, placeholder: "CPF", required: true %>
     </div>
 
     <div class="field">
       <%= form.label :national_health_card, "Cartão SUS" %>
-      <%= form.text_field :national_health_card, placeholder: "Cartão SUS" %>
+      <%= form.text_field :national_health_card, placeholder: "Cartão SUS", required: true %>
     </div>
 
     <div class="field">
       <%= form.label :email, "Email" %>
-      <%= form.text_field :email, placeholder: "Email" %>
+      <%= form.text_field :email, placeholder: "Email", required: true %>
     </div>
 
     <div class="field">
       <%= form.label :birthdate, "Data de Nascimento" %>
-      <%= form.date_field :birthdate, placeholder: "Data de Nascimento" %>
+      <%= form.date_field :birthdate, placeholder: "Data de Nascimento", required: true %>
     </div>
 
     <div class="field">
       <%= form.label :phone, "Telefone com DDI e DDD" %>
-      <%= form.text_field :phone, placeholder: "+55 (00) 0000-0000" %>
+      <%= form.text_field :phone, placeholder: "+55 (00) 0000-0000", required: true %>
     </div>
 
     <div class="field">
-      <%= form.label :photo, "Photo" %>
-      <%= form.file_field :photo, placeholder: "Photo" %>
+      <%= form.label :photo, "Foto" %>
+      <% if @citizen.photo.attached? %>
+        <%= form.file_field :photo, placeholder: "Foto" %>
+      <% else %>
+        <%= form.file_field :photo, placeholder: "Foto", required: true %>
+      <% end %>
     </div>
 
     <div class="field">
@@ -44,27 +48,32 @@
     <%= form.fields_for :address do |address_fields| %>
       <div class="field">
         <%= address_fields.label :zip_code, "CEP" %>
-        <%= address_fields.text_field :zip_code, placeholder: "CEP" %>
+        <%= address_fields.text_field :zip_code, placeholder: "CEP", required: true %>
       </div>
 
       <div class="field">
         <%= address_fields.label :street, "Logradouro" %>
-        <%= address_fields.text_field :street, placeholder: "Logradouro" %>
+        <%= address_fields.text_field :street, placeholder: "Logradouro", required: true %>
+      </div>
+
+      <div class="field">
+        <%= address_fields.label :complement, "Complemento" %>
+        <%= address_fields.text_field :complement, placeholder: "Complemento" %>
       </div>
 
       <div class="field">
         <%= address_fields.label :neighborhood, "Bairro" %>
-        <%= address_fields.text_field :neighborhood, placeholder: "Bairro" %>
+        <%= address_fields.text_field :neighborhood, placeholder: "Bairro", required: true %>
       </div>
 
       <div class="field">
         <%= address_fields.label :city, "Cidade" %>
-        <%= address_fields.text_field :city, placeholder: "Cidade" %>
+        <%= address_fields.text_field :city, placeholder: "Cidade", required: true %>
       </div>
 
       <div class="field">
         <%= address_fields.label :state, "Estado" %>
-        <%= address_fields.text_field :state, placeholder: "Estado" %>
+        <%= address_fields.text_field :state, placeholder: "Estado", required: true %>
       </div>
 
       <div class="field">

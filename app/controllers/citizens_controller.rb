@@ -87,6 +87,7 @@ class CitizensController < ApplicationController
       id
       zip_code
       street
+      complement
       neighborhood
       city
       state

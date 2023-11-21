@@ -44,12 +44,12 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_21_065715) do
 
   create_table "addresses", force: :cascade do |t|
     t.bigint "citizen_id", null: false
-    t.string "zip_code"
-    t.string "street"
+    t.string "zip_code", null: false
+    t.string "street", null: false
     t.string "complement"
-    t.string "neighborhood"
-    t.string "city"
-    t.string "state"
+    t.string "neighborhood", null: false
+    t.string "city", null: false
+    t.string "state", null: false
     t.string "ibge_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
