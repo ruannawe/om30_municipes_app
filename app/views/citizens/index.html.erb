@@ -1,42 +1,43 @@
 <section>
-    <h4>Filtros</h4>
+  <h4>Filtros</h4>
 
-    <%= form_with url: citizens_path, method: :get, local: true, id: 'filter-form' do |form| %>
+  <%= form_with url: citizens_path, method: :get, local: true, id: 'filter-form' do |form| %>
 
-        <div class="filter-flex-container">
-            <div class="filter-flex-item">
-                <%= form.text_field :full_name, placeholder: "Nome Completo", value: params[:full_name] %>
-                <%= form.text_field :tax_id, placeholder: "CPF", value: params[:tax_id] %>
-                <%= form.text_field :national_health_card, placeholder: "Cartão SUS", value: params[:national_health_card] %>
-                <%= form.text_field :email, placeholder: "Email", value: params[:email] %>
-                <%= form.date_field :birthdate, placeholder: "Data de Nascimento", value: params[:birthdate] %>
-                <%= form.text_field :phone, placeholder: "Telefone", value: params[:phone] %>
-            </div>
+    <div class="filter-flex-container">
+      <div class="filter-flex-item">
+        <%= form.text_field :full_name, placeholder: "Nome Completo", value: params[:full_name] %>
+        <%= form.text_field :tax_id, placeholder: "CPF", value: params[:tax_id] %>
+        <%= form.text_field :national_health_card, placeholder: "Cartão SUS", value: params[:national_health_card] %>
+        <%= form.text_field :email, placeholder: "Email", value: params[:email] %>
+        <%= form.date_field :birthdate, placeholder: "Data de Nascimento", value: params[:birthdate] %>
+        <%= form.text_field :phone, placeholder: "Telefone", value: params[:phone] %>
+      </div>
 
-            <div class="filter-flex-item">
-                <%= form.text_field :zip_code, placeholder: "CEP", value: params[:zip_code] %>
-                <%= form.text_field :street, placeholder: "Logradouro", value: params[:street] %>
-                <%= form.text_field :neighborhood, placeholder: "Bairro", value: params[:neighborhood] %>
-                <%= form.text_field :city, placeholder: "Cidade", value: params[:city] %>
-                <%= form.text_field :state, placeholder: "Estado", value: params[:state] %>
-                <%= form.text_field :ibge_code, placeholder: "Código IBGE", value: params[:ibge_code] %>
-            </div>
-        </div>
+      <div class="filter-flex-item">
+        <%= form.text_field :zip_code, placeholder: "CEP", value: params[:zip_code] %>
+        <%= form.text_field :street, placeholder: "Logradouro", value: params[:street] %>
+        <%= form.text_field :neighborhood, placeholder: "Bairro", value: params[:neighborhood] %>
+        <%= form.text_field :city, placeholder: "Cidade", value: params[:city] %>
+        <%= form.text_field :state, placeholder: "Estado", value: params[:state] %>
+        <%= form.text_field :ibge_code, placeholder: "Código IBGE", value: params[:ibge_code] %>
+      </div>
+    </div>
 
-        <div class="filter-button-group">
-            <%= form.submit "Filtrar", class: "filter-button primary" %>
-            <button type="button" class="filter-button secondary" id="reset-button">Limpar filtros</button>
-        </div>
-    <% end %>
+    <div class="filter-button-group">
+      <%= form.submit "Filtrar", class: "filter-button primary" %>
+      <button type="button" class="filter-button secondary" id="reset-button">Limpar filtros</button>
+    </div>
+  <% end %>
 </section>
 
 <div class="citizens-header">
-    <h1>Listagem de Munícipes</h1>
-    <%# erblint:disable-all %>
-    <button class="button primary create-citizen-button" onclick="window.location='<%= new_citizen_path %>'">
-        Criar Munícipe
-    </button>
-    <%# erblint:enable-all %>
+  <h1>Listagem de Munícipes</h1>
+
+  <%# erblint:disable-all %>
+  <button class="button primary create-citizen-button" onclick="window.location='<%= new_citizen_path %>'">
+    Criar Munícipe
+  </button>
+  <%# erblint:enable-all %>
 </div>
 
 <table>
@@ -47,8 +48,7 @@
       <th>Email</th>
       <th>Telefone</th>
       <th>Endereço</th>
-      <th>Ações</th> <!-- Added a column for actions -->
-    </tr>
+      <th>Ações</th> </tr>
   </thead>
   <tbody>
     <% @citizens.each do |citizen| %>

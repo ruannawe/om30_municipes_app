@@ -1,7 +1,6 @@
 <section>
   <%= form_with model: @citizen, local: true do |form| %>
 
-    <!-- Campos para Citizen -->
     <div class="field">
       <%= form.label :full_name, "Nome Completo" %>
       <%= form.text_field :full_name, placeholder: "Nome Completo" %>
@@ -37,7 +36,6 @@
       <%= form.check_box :status %>
     </div>
 
-    <!-- Campos para Address -->
     <%= form.fields_for :address do |address_fields| %>
       <div class="field">
         <%= address_fields.label :zip_code, "CEP" %>
