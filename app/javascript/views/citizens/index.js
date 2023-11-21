@@ -12,8 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const zipCodeField = document.getElementById('address_zip_code')
     zipCodeField.addEventListener('change', () => {
         const zipCode = zipCodeField.value
-        console.log('hello')
-        console.log(zipCode)
 
         if (zipCode.length === 8) {
             fetch(`https://app.zipcodebase.com/api/v1/search?codes=${zipCode}&apikey=63750c50-88b2-11ee-a503-87b46622915b`)
